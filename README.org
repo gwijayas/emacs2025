@@ -1,0 +1,7 @@
+Kurang puas dengan https://github.com/jamescherti/minimal-emacs.d, sehingga ingin membuat baru. Beberapa ketidakpuasan:
+- Perlu menjalankan emacs berkali-kali terdelbih dahulu berkaitan dengan elpa
+- Pada komputer 1GB, ketika kompilasi elpa, membutuhkan 600MB RAM. Apakah dengan konfigurasi baru bisa mengurangi?
+
+Beberapa catatan:
+- Emacs windows binary yang di download dari situs emacs, sudah menyertakan versi native compilasi
+- Build emacs windows menggunakan msys2 dan gnutls, memiliki problem berkaitan dengan signature
