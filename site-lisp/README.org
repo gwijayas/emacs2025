@@ -1,0 +1,1 @@
+Meletakkan emacs lisp
