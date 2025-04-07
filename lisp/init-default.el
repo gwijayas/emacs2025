@@ -60,9 +60,6 @@
 ;; Allow nested minibuffers
 (setq enable-recursive-minibuffers t)
 
-;; no beep pleeeeeease ! (and no visual blinking too please)
-(setq ring-bell-function 'ignore
-      visible-bell nil)
 
 ;; Don't try to ping things that look like domain names
 (setq ffap-machine-p-known 'reject)
@@ -94,6 +91,8 @@
 ;; use only spaces and no tabs
 (setq-default indent-tabs-mode nil
               tab-width 2)
+;; Enable indentation and completion using the TAB key
+(setq-default tab-always-indent nil)
 
 ;; Text
 (setq longlines-show-hard-newlines t)
@@ -197,8 +196,50 @@
 (setq save-place-file (expand-file-name "saveplace" user-emacs-directory))
 (setq save-place-limit 600)
 
+;;TODO
+;; conflicts with "show-smartparens-mode". see the spacemacs-editing layer
+(show-paren-mode -1)
 
 
+;; When emacs asks for "yes" or "no", let "y" or "n" suffice
+(fset 'yes-or-no-p 'y-or-n-p)
+;; draw underline lower
+(setq x-underline-at-descent-line t)
+;; don't let the cursor go into minibuffer prompt
+;; Tip taken from Xah Lee: http://ergoemacs.org/emacs/emacs_stop_cursor_enter_prompt.html
+(setq minibuffer-prompt-properties
+      '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt))
+
+;; make `next-buffer', `other-buffer', etc. ignore useless buffers (see
+;; `wijaya-emacs/useless-buffer-p')
+(let ((buf-pred-entry (assq 'buffer-predicate default-frame-alist)))
+  (if buf-pred-entry
+      ;; `buffer-predicate' entry exists, modify it
+      (setcdr buf-pred-entry #'wijaya-emacs/useful-buffer-p)
+    ;; `buffer-predicate' entry doesn't exist, create it
+    (push '(buffer-predicate . wijaya-emacs/useful-buffer-p) default-frame-alist)))
+
+;;; Text editing, indent, font, and formatting
+
+;; Avoid automatic frame resizing when adjusting settings.
+(setq global-text-scale-adjust-resizes-frames nil)
+
+;; A longer delay can be annoying as it causes a noticeable pause after each
+;; deletion, disrupting the flow of editing.
+(setq delete-pair-blink-delay 0.03)
+
+(setq-default left-fringe-width  8)
+(setq-default right-fringe-width 8)
+
+;; Do not show an arrow at the top/bottomin the fringe and empty lines
+(setq-default indicate-buffer-boundaries nil)
+(setq-default indicate-empty-lines nil)
+;; Continue wrapped lines at whitespace rather than breaking in the
+;; middle of a word.
+(setq-default word-wrap t)
+
+;; Disable wrapping by default due to its performance cost.
+(setq-default truncate-lines t)
 
 
 (provide 'init-default)

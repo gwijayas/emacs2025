@@ -1,18 +1,18 @@
 ;;; init-core.el --- Fungsi dan variabel tambahan -*- lexical-binding: t; -*
 ;;; Code:
 
-(defconst wijaya-emacs/cache-directory
+(defconst wijaya-emacs-cache-directory
   (concat user-emacs-directory ".cache/")
   "Storage area for persistent files.")
 
 ;; ~/.emacs.d/.cache/auto-save
-(defconst wijaya-emacs/auto-save-directory
-  (concat wijaya-emacs/cache-directory "auto-save/")
+(defconst wijaya-emacs-auto-save-directory
+  (concat wijaya-emacs-cache-directory "auto-save/")
   "Auto-save directory.")
 
 ;;;; Setup cache directories
 
-(make-directory wijaya-emacs/cache-directory 'parents)
+(make-directory wijaya-emacs-cache-directory 'parents)
 
 (defun font-exists-p (font)
   (if (null (x-list-fonts font))
@@ -39,7 +39,7 @@ upon reopening. This feature is particularly beneficial for resuming work at
 the precise point where you previously left off."
   (add-hook 'after-init-hook #'save-place-mode))
 
-(defun wijaya-emacs-activate-savehist-mode ()
+(defun wijaya-emacs/activate-savehist-mode ()
   "savehist is an Emacs feature that preserves the minibuffer history between
 sessions. It saves the history of inputs in the minibuffer, such as commands,
 search strings, and other prompts, to a file. This allows users to retain
@@ -58,7 +58,7 @@ their minibuffer history across Emacs restarts"
   )
 
 ;; Regexp for useful and useless buffers for smarter buffer switching
-(defvar wijaya-emacs/useless-buffers-regexp '()
+(defvar wijaya-emacs-useless-buffers-regexp '()
   "Regexp used to determine if a buffer is not useful.
 
 Such useless buffers are skipped by `previous-buffer',
@@ -66,7 +66,7 @@ Such useless buffers are skipped by `previous-buffer',
 (see `wijaya-emacs/useful-buffers-restrict-spc-tab').")
 
 
-(defvar wijaya-emacs/useful-buffers-regexp '()
+(defvar wijaya-emacs-useful-buffers-regexp '()
   "Regexp used to define buffers that are useful despite matching
 `wijaya-emacs/useless-buffers-regexp'.")
 
@@ -75,9 +75,9 @@ Such useless buffers are skipped by `previous-buffer',
   "Return non-nil if BUFFER should be offered when switching buffers."
   (let ((buf-name (buffer-name buffer)))
     (or (provided-mode-derived-p (buffer-local-value 'major-mode buffer) 'comint-mode)
-        (cl-loop for useful-regexp in wijaya-emacs/useful-buffers-regexp
+        (cl-loop for useful-regexp in wijaya-emacs-useful-buffers-regexp
                  thereis (string-match-p useful-regexp buf-name))
-        (cl-loop for useless-regexp in wijaya-emacs/useless-buffers-regexp
+        (cl-loop for useless-regexp in wijaya-emacs-useless-buffers-regexp
                  never (string-match-p useless-regexp buf-name)))))
 
 (defun wijaya-emacs/useless-buffer-p (buffer)
