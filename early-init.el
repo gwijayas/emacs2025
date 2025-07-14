@@ -1,6 +1,7 @@
 ;;; early-init.el --- -*- no-byte-compile: t -*-
 ;;; Daftar referensi:
 ;;; - https://github.com/redguardtoo/emacs.d
+;;; - https://github.com/jamescherti/minimal-emacs.d
 ;;spesifikasi komputer yang menggunakan fitur paling banyak, dan GUI
 ;; - JAYAPCCONDET komputer desktop di condet
 ;; - condetxubuntu2 laptop linux di condet
@@ -17,16 +18,20 @@
           noninteractive)
   (setq package-enable-at-startup nil))
 
-(defvar my-computer-has-smaller-memory-p nil
-  "Installing&Compiling many packages could cost too much memory.")
-
-
-;; hardcode saja mesin-mesin besar
-
 ;; @see https://www.reddit.com/r/emacs/comments/ofhket/further_boost_start_up_time_with_a_simple_tweak/
 ;; 10% speed up of startup for my configuration
-(unless my-computer-has-smaller-memory-p
-  (setq gc-cons-percentage 0.6)
-  (setq gc-cons-threshold most-positive-fixnum))
+(when jaya-emacs/komputer-full
+  (progn
+    (setq gc-cons-percentage 0.6)
+    (setq gc-cons-threshold most-positive-fixnum)))
 
+(setq inhibit-startup-message t)
+;; no menu bar, toolbar, scroll bar
+;; (setq default-frame-alist
+;;       '((menu-bar-lines . 0)
+;;         (tool-bar-lines . 0)
+;;         (horizontal-scroll-bars)
+;;         (vertical-scroll-bars)))
+
+(provide 'early-init)
 ;;; early-init ends here
