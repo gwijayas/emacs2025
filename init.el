@@ -4,8 +4,6 @@
 ;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
 ;;(setq debug-on-error t)
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-;; Adjust garbage collection threshold for early startup (see use of gcmh below)
-(setq gc-cons-threshold (* 128 1024 1024))
 
 ;;; Native compilation and Byte compilation
 
@@ -29,19 +27,6 @@
 (setq jka-compr-verbose 0)
 (setq byte-compile-warnings t
       byte-compile-verbose 0)
-
-
-;;spesifikasi komputer yang menggunakan fitur paling banyak, dan GUI
-;; - JAYAPCCONDET komputer desktop di condet
-;; - condetxubuntu2 laptop linux di condet
-;; - mesinvm desktop di Prince Center"
-;; - GEDE-WIJAYA laptop di Prince Center. Windows
-(defvar jaya-emacs/komputer-full
-  (or (equal (system-name) "JAYAPCCONDET")
-      (equal (system-name) "mesinvm")
-      (equal (system-name) "GEDE-WIJAYA")
-      (equal (system-name) "condetxubuntu2")))
-
 
 
 ;; Process performance tuning
